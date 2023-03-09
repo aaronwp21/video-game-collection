@@ -1,6 +1,10 @@
 import React from 'react'
 
 import Layout from './components/Layout';
+import List from './pages/List';
+import Add from './pages/Add';
+import Update from './pages/Update';
+import NotFound from './pages/NotFound';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
