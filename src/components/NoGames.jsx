@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 
+import { useNavigate } from 'react-router-dom';
+
 const images = [
   {
     url: 'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2023_09/3596622/230302-gaming-consoles-bd-2x1.jpg',
@@ -78,10 +80,12 @@ const ImageMarked = styled('span')(({ theme }) => ({
 
 
 function NoGames() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
     {images.map((image) => (
       <ImageButton
+        onClick={() => navigate('/add')}
         focusRipple
         key={image.title}
         style={{

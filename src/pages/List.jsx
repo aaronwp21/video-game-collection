@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import { GamesContext } from '../components/contexts/game.context';
 
 import NoGames from '../components/NoGames';
+import GamesList from '../components/GamesList';
 
 function List() {
   const { games, fetchGames, deleteGame, loading, error } = useContext(GamesContext);
@@ -32,7 +33,7 @@ function List() {
         Games
       </Typography>
       {callStatusComponent}
-      {/* <GamesList games={games} deleteHandler={deleteHandler} /> */}
+      <GamesList games={games} deleteHandler={deleteHandler} />
     </>
   )
 }
