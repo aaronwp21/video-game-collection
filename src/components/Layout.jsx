@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom';
 
 import Header from './Header';
 
@@ -8,6 +9,9 @@ function Layout() {
       <header>
         <Header />
       </header>
+      <main>
+        <Outlet />
+      </main>
     </>
   )
 }
