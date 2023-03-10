@@ -16,9 +16,17 @@ import Typography from '@mui/material/Typography';
 function GamesList({
   games = [],
   deleteHandler = () => console.log('No deletehandler provided'),
+  sorter = 'title'
 }) {
   const theme = useTheme();
   const mobileClosed = useMediaQuery(theme.breakpoints.up('sm'));
+
+  if(sorter === 'title'){
+    games.sort((a, b) => a.title.localeCompare(b.title));
+  } else {
+    games.sort((a, b) => a.gamesConsole.localeCompare(b.gamesConsole));
+  }
+
   return (
     <Box sx={{display: 'flex', flexDirection: mobileClosed ? 'row' : 'column', justifyContent: 'center', gap: 2, flexWrap: 'wrap', alignItems: mobileClosed ? 'initial' : 'center'}}>
       {games.map(({ title, gamesConsole, cover_url, id }) => (
