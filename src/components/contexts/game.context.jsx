@@ -76,7 +76,7 @@ export const GamesProvider = ({ children }) => {
       console.log("updating", id, formData);
       let updatedGame = null;
       // Get index
-      const index = games.findIndex((game) => game._id === id);
+      const index = games.findIndex((game) => game.id === id);
       console.log(index);
       if (index === -1) throw new Error(`Game with index ${id} not found`);
       // Get actual car
@@ -87,7 +87,7 @@ export const GamesProvider = ({ children }) => {
       const updates = {};
 
       for (const key of Object.keys(oldGame)) {
-        if (key === "_id") continue;
+        if (key === "id") continue;
         if (oldGame[key] !== formData[key]) {
           updates[key] = formData[key];
         }
