@@ -1,6 +1,8 @@
-import React, { createContext, useState, useCallback, useContext } from "react";
+import React, { createContext, useState, useCallback, useContext } from 'react';
 
-import { GAMES_ENDPOINT, STORAGE_KEY } from "../../settings";
+import { useNavigate } from 'react-router-dom';
+
+import { GAMES_ENDPOINT, STORAGE_KEY } from '../../settings';
 
 export const GamesContext = createContext({
   fetchGames: () => [],
@@ -20,6 +22,7 @@ export const GamesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchGames = useCallback(async () => {
     if (loading || loaded || error) {
@@ -36,7 +39,7 @@ export const GamesProvider = ({ children }) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       setGames(data);
     } catch (err) {
-      console.log("Error", err);
+      console.log('Error', err);
       setError(`Failed to load games`);
     } finally {
       setLoaded(true);
@@ -46,12 +49,12 @@ export const GamesProvider = ({ children }) => {
 
   const addGame = useCallback(
     async (formData) => {
-      console.log("about to add", formData);
+      console.log('about to add', formData);
       try {
         const response = await fetch(GAMES_ENDPOINT, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(formData),
@@ -60,7 +63,7 @@ export const GamesProvider = ({ children }) => {
           throw response;
         }
         const savedGame = await response.json();
-        console.log("got data", savedGame);
+        console.log('got data', savedGame);
         const newGames = [...games, savedGame];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newGames));
         setGames(newGames);
@@ -68,12 +71,12 @@ export const GamesProvider = ({ children }) => {
         console.log(err);
       }
     },
-    [games, setGames]
+    [games, setGames],
   );
 
   const updateGame = useCallback(
     async (id, formData) => {
-      console.log("updating", id, formData);
+      console.log('updating', id, formData);
       let updatedGame = null;
       // Get index
       const index = games.findIndex((game) => game.id === id);
@@ -81,51 +84,41 @@ export const GamesProvider = ({ children }) => {
       if (index === -1) throw new Error(`Game with index ${id} not found`);
       // Get actual game
       const oldGame = games[index];
-      console.log("oldGame", oldGame);
-
-      // Send the differences, not the whole update
-      const updates = {};
-
-      for (const key of Object.keys(oldGame)) {
-        if (key === "id") continue;
-        if (oldGame[key] !== formData[key]) {
-          updates[key] = formData[key];
-        }
-      }
+      console.log('oldGame', oldGame);
 
       try {
-        const response = await fetch(`${GAMES_ENDPOINT}/${id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify(updates),
-        });
-
-        if (response.status !== 200) {
-          throw response;
-        }
-
         // Merge with formData
         updatedGame = {
           ...oldGame,
           ...formData, // order here is important for the override!!
         };
-        console.log("updatedGame", updatedGame);
+        console.log('updatedGame', updatedGame);
         // recreate the games array
         const updatedGames = [
           ...games.slice(0, index),
           updatedGame,
           ...games.slice(index + 1),
         ];
+        const response = await fetch(`${GAMES_ENDPOINT}/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: JSON.stringify(updatedGame),
+        });
+
+        if (response.status !== 200) {
+          throw response;
+        }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
+        navigate("/");
       } catch (err) {
         console.log(err);
       }
     },
-    [games, setGames]
+    [games, setGames],
   );
 
   const deleteGame = useCallback(
@@ -133,9 +126,9 @@ export const GamesProvider = ({ children }) => {
       let deletedGame = null;
       try {
         const response = await fetch(`${GAMES_ENDPOINT}/${id}`, {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         });
@@ -146,7 +139,10 @@ export const GamesProvider = ({ children }) => {
         const index = games.findIndex((game) => game._id === id);
         deletedGame = games[index];
         // recreate the games array without that game
-        const updatedGames = [...games.slice(0, index), ...games.slice(index + 1)];
+        const updatedGames = [
+          ...games.slice(0, index),
+          ...games.slice(index + 1),
+        ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
         console.log(`Deleted ${deletedGame.name}`);
@@ -154,7 +150,7 @@ export const GamesProvider = ({ children }) => {
         console.log(err);
       }
     },
-    [games, setGames]
+    [games, setGames],
   );
 
   return (
@@ -172,4 +168,4 @@ export const GamesProvider = ({ children }) => {
       {children}
     </GamesContext.Provider>
   );
-}
+};
