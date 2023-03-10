@@ -63,7 +63,7 @@ export const GamesProvider = ({ children }) => {
         console.log("got data", savedGame);
         const newGames = [...games, savedGame];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newGames));
-        setCars(newGames);
+        setGames(newGames);
       } catch (err) {
         console.log(err);
       }
@@ -79,7 +79,7 @@ export const GamesProvider = ({ children }) => {
       const index = games.findIndex((game) => game.id === id);
       console.log(index);
       if (index === -1) throw new Error(`Game with index ${id} not found`);
-      // Get actual car
+      // Get actual game
       const oldGame = games[index];
       console.log("oldGame", oldGame);
 
@@ -113,7 +113,7 @@ export const GamesProvider = ({ children }) => {
           ...formData, // order here is important for the override!!
         };
         console.log("updatedGame", updatedGame);
-        // recreate the cars array
+        // recreate the games array
         const updatedGames = [
           ...games.slice(0, index),
           updatedGame,
