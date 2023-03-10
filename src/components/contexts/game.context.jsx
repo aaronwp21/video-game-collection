@@ -1,8 +1,10 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import { GAMES_ENDPOINT, STORAGE_KEY } from '../../settings';
+
+import { UIContext } from "./UI.context";
 
 export const GamesContext = createContext({
   fetchGames: () => [],
@@ -16,6 +18,7 @@ export const GamesContext = createContext({
 });
 
 export const GamesProvider = ({ children }) => {
+  const { showMessage } = useContext(UIContext);
   const [games, setGames] = useState(() => {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   });
@@ -40,6 +43,10 @@ export const GamesProvider = ({ children }) => {
     } catch (err) {
       console.log('Error', err);
       setError(`Failed to load games`);
+      showMessage({
+        type: "error",
+        string: `Error loading games`,
+      });
     } finally {
       setLoaded(true);
       setLoading(false);
@@ -65,10 +72,14 @@ export const GamesProvider = ({ children }) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newGames));
         setGames(newGames);
       } catch (err) {
+        showMessage({
+          type: "error",
+          string: `Error adding game`,
+        });
         console.log(err);
       }
     },
-    [games, setGames],
+    [games, setGames, showMessage],
   );
 
   const updateGame = useCallback(
@@ -108,10 +119,14 @@ export const GamesProvider = ({ children }) => {
         setGames(updatedGames);
         navigate("/");
       } catch (err) {
+        showMessage({
+          type: "error",
+          string: `Error loading cars`,
+        });
         console.log(err);
       }
     },
-    [games, setGames],
+    [games, setGames, showMessage]
   );
 
   const deleteGame = useCallback(
@@ -139,10 +154,14 @@ export const GamesProvider = ({ children }) => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
       } catch (err) {
+        showMessage({
+          type: "error",
+          string: `Error deleting ${deletedGame.name}`,
+        });
         console.log(err);
       }
     },
-    [games, setGames],
+    [games, setGames, showMessage]
   );
 
   return (
