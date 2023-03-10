@@ -30,7 +30,6 @@ export const GamesProvider = ({ children }) => {
     }
     setLoading(true);
     try {
-      console.log(`fetching from ${GAMES_ENDPOINT}`);
       const response = await fetch(GAMES_ENDPOINT);
       if (!response.ok) {
         throw response;
@@ -49,7 +48,6 @@ export const GamesProvider = ({ children }) => {
 
   const addGame = useCallback(
     async (formData) => {
-      console.log('about to add', formData);
       try {
         const response = await fetch(GAMES_ENDPOINT, {
           method: 'POST',
@@ -63,7 +61,6 @@ export const GamesProvider = ({ children }) => {
           throw response;
         }
         const savedGame = await response.json();
-        console.log('got data', savedGame);
         const newGames = [...games, savedGame];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newGames));
         setGames(newGames);
@@ -76,15 +73,12 @@ export const GamesProvider = ({ children }) => {
 
   const updateGame = useCallback(
     async (id, formData) => {
-      console.log('updating', id, formData);
       let updatedGame = null;
       // Get index
       const index = games.findIndex((game) => game.id === id);
-      console.log(index);
       if (index === -1) throw new Error(`Game with index ${id} not found`);
       // Get actual game
       const oldGame = games[index];
-      console.log('oldGame', oldGame);
 
       try {
         // Merge with formData
@@ -92,7 +86,6 @@ export const GamesProvider = ({ children }) => {
           ...oldGame,
           ...formData, // order here is important for the override!!
         };
-        console.log('updatedGame', updatedGame);
         // recreate the games array
         const updatedGames = [
           ...games.slice(0, index),
@@ -145,7 +138,6 @@ export const GamesProvider = ({ children }) => {
         ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
-        console.log(`Deleted ${deletedGame.name}`);
       } catch (err) {
         console.log(err);
       }
