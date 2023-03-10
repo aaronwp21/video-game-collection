@@ -24,7 +24,7 @@ function Header() {
 
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, marginBlockEnd: 3 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

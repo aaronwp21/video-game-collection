@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+import Container from '@mui/material/Container';
 import React, { useContext, useEffect } from 'react'
 
 import { GamesContext } from '../components/contexts/game.context';
@@ -28,13 +29,13 @@ function List() {
     callStatusComponent = <NoGames />;
   }
   return (
-    <>
-      <Typography variant='h3' component='h2' sx={{textDecoration: 'underline'}}>
+    <Container maxWidth='xl'>
+      {/* <Typography variant='h3' component='h2' sx={{textDecoration: 'underline', marginBlockEnd: 2}}>
         Games
-      </Typography>
+      </Typography> */}
       {callStatusComponent}
       <GamesList games={games} deleteHandler={deleteHandler} />
-    </>
+    </Container>
   )
 }
 
