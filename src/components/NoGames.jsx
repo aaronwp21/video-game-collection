@@ -82,7 +82,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
 function NoGames() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', minWidth: 300, width: '100%' }}>
     {images.map((image) => (
       <ImageButton
         onClick={() => navigate('/add')}

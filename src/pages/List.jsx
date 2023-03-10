@@ -42,7 +42,7 @@ function List() {
   }
   return (
     <Container maxWidth="xl">
-      <FormControl sx={{marginBlockEnd: 4}}>
+      <FormControl sx={games.length === 0 ? {display: 'none'} : {marginBlockEnd: 4}}>
         <FormLabel id="demo-controlled-radio-buttons-group">Sort By:</FormLabel>
         <RadioGroup
           row

@@ -140,11 +140,11 @@ export const GamesProvider = ({ children }) => {
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         });
-        if (response.status !== 204) {
+        if (response.status !== 200) {
           throw response;
         }
         // Get index
-        const index = games.findIndex((game) => game._id === id);
+        const index = games.findIndex((game) => game.id === id);
         deletedGame = games[index];
         // recreate the games array without that game
         const updatedGames = [
@@ -156,7 +156,7 @@ export const GamesProvider = ({ children }) => {
       } catch (err) {
         showMessage({
           type: "error",
-          string: `Error deleting ${deletedGame.name}`,
+          string: `Error deleting game`,
         });
         console.log(err);
       }
