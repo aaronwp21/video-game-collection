@@ -12,7 +12,7 @@ import { TextField, Button, Box } from '@mui/material';
 const schema = yup.object().shape({
   title: yup.string().required(),
   gamesConsole: yup.string().required(),
-  cover_url: yup.string().url(),
+  cover_url: yup.string().url().required(),
 });
 
 const defaults = {

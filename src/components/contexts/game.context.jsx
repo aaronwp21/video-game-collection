@@ -71,6 +71,10 @@ export const GamesProvider = ({ children }) => {
         const newGames = [...games, savedGame];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newGames));
         setGames(newGames);
+        showMessage({
+          type: "success",
+          string: `Added ${savedGame.title}`,
+        });
       } catch (err) {
         showMessage({
           type: "error",
@@ -117,11 +121,15 @@ export const GamesProvider = ({ children }) => {
         }
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
+        showMessage({
+          type: "success",
+          string: `Updated ${oldGame.title}`,
+        });
         navigate("/");
       } catch (err) {
         showMessage({
           type: "error",
-          string: `Error loading cars`,
+          string: `Error updating ${oldGame.title}`,
         });
         console.log(err);
       }
@@ -153,6 +161,10 @@ export const GamesProvider = ({ children }) => {
         ];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedGames));
         setGames(updatedGames);
+        showMessage({
+          type: "success",
+          string: `Deleted ${deletedGame.title}`,
+        });
       } catch (err) {
         showMessage({
           type: "error",

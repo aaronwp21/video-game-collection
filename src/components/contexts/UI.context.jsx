@@ -18,7 +18,7 @@ export const UIProvider = ({ children }) => {
   const onClose = () => {
     setOpen(false);
     setMessage("");
-    setSeverity("");
+    setSeverity("info");
   };
 
   const showMessage = ({ type, string }) => {
