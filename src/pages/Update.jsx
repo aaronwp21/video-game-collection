@@ -10,7 +10,7 @@ function Update() {
   const { id } = useParams();
   const { games, updateGame } = useContext(GamesContext)
 
-  const gameFound = games.find((game) => parseInt(id) === game.id);
+  const gameFound = games.find((game) => parseInt(id) === game._id);
 
   return (
     <Container maxWidth='lg'>

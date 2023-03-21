@@ -45,7 +45,7 @@ export default function GameForm({ game, submitHandler }) {
 
   let submitFn = (vals) => {
     reset();
-    game ? submitHandler(game.id, vals) : submitHandler(vals);
+    game ? submitHandler(game._id, vals) : submitHandler(vals);
   };
 
   return (

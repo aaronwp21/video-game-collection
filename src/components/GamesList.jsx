@@ -29,8 +29,8 @@ function GamesList({
 
   return (
     <Box sx={{display: 'flex', flexDirection: mobileClosed ? 'row' : 'column', justifyContent: 'center', gap: 2, flexWrap: 'wrap', alignItems: mobileClosed ? 'initial' : 'center'}}>
-      {games.map(({ title, games_console, cover_url, id }) => (
-        <Card key={id} sx={{ width: '100%', maxWidth: 345 }}>
+      {games.map(({ title, games_console, cover_url, _id }) => (
+        <Card key={_id} sx={{ width: '100%', maxWidth: 345 }}>
           <CardMedia
             component="img"
             alt={title}
@@ -50,14 +50,14 @@ function GamesList({
               aria-label="update"
               size="small"
               component={Link}
-              to={`/update/${id}`}
+              to={`/update/${_id}`}
             >
               Edit
             </Button>
             <Button
               aria-label="delete"
               size="small"
-              onClick={() => deleteHandler(id)}
+              onClick={() => deleteHandler(_id)}
             >
               Remove
             </Button>

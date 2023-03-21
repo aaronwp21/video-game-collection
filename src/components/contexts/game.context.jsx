@@ -90,7 +90,7 @@ export const GamesProvider = ({ children }) => {
     async (id, formData) => {
       let updatedGame = null;
       // Get index
-      const index = games.findIndex((game) => game.id === id);
+      const index = games.findIndex((game) => game._id === id);
       if (index === -1) throw new Error(`Game with index ${id} not found`);
       // Get actual game
       const oldGame = games[index];
@@ -148,11 +148,11 @@ export const GamesProvider = ({ children }) => {
             // 'Content-Type': 'application/x-www-form-urlencoded',
           },
         });
-        if (response.status !== 200) {
+        if (response.status !== 204) {
           throw response;
         }
         // Get index
-        const index = games.findIndex((game) => game.id === id);
+        const index = games.findIndex((game) => game._id === id);
         deletedGame = games[index];
         // recreate the games array without that game
         const updatedGames = [
