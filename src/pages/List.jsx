@@ -52,7 +52,7 @@ function List() {
           onChange={handleChange}
         >
           <FormControlLabel value="title" control={<Radio />} label="Title" />
-          <FormControlLabel value="gamesConsole" control={<Radio />} label="Console" />
+          <FormControlLabel value="games_console" control={<Radio />} label="Console" />
         </RadioGroup>
       </FormControl>
       {callStatusComponent}

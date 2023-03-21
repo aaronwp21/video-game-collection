@@ -11,13 +11,13 @@ import { TextField, Button, Box } from '@mui/material';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
-  gamesConsole: yup.string().required(),
+  games_console: yup.string().required(),
   cover_url: yup.string().url().required(),
 });
 
 const defaults = {
   title: '',
-  gamesConsole: '',
+  games_console: '',
   console_url: '',
 };
 
@@ -73,7 +73,7 @@ export default function GameForm({ game, submitHandler }) {
           <div>
             <Controller
               control={control}
-              name="gamesConsole"
+              name="games_console"
               defaultValue={''}
               render={({ field }) => (
                 <TextField
@@ -82,8 +82,8 @@ export default function GameForm({ game, submitHandler }) {
                   {...field}
                   label="Games Console"
                   fullWidth
-                  error={!!errors.gamesConsole}
-                  helperText={errors.gamesConsole?.message}
+                  error={!!errors.games_console}
+                  helperText={errors.games_console?.message}
                 />
               )}
             />

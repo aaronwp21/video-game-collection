@@ -24,12 +24,12 @@ function GamesList({
   if(sorter === 'title'){
     games.sort((a, b) => a.title.localeCompare(b.title));
   } else {
-    games.sort((a, b) => a.gamesConsole.localeCompare(b.gamesConsole));
+    games.sort((a, b) => a.games_console.localeCompare(b.games_console));
   }
 
   return (
     <Box sx={{display: 'flex', flexDirection: mobileClosed ? 'row' : 'column', justifyContent: 'center', gap: 2, flexWrap: 'wrap', alignItems: mobileClosed ? 'initial' : 'center'}}>
-      {games.map(({ title, gamesConsole, cover_url, id }) => (
+      {games.map(({ title, games_console, cover_url, id }) => (
         <Card key={id} sx={{ width: '100%', maxWidth: 345 }}>
           <CardMedia
             component="img"
@@ -42,7 +42,7 @@ function GamesList({
               {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {gamesConsole}
+              {games_console}
             </Typography>
           </CardContent>
           <CardActions>
