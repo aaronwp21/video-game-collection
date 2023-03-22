@@ -8,9 +8,9 @@ import { GamesContext } from '../components/contexts/game.context'
 
 function Update() {
   const { id } = useParams();
-  const { games, updateGame } = useContext(GamesContext)
+  const { games, updateGame } = useContext(GamesContext);
 
-  const gameFound = games.find((game) => parseInt(id) === game._id);
+  const gameFound = games.find(({ _id }) => id === _id);
 
   return (
     <Container maxWidth='lg'>
